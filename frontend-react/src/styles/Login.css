@@ -1,0 +1,409 @@
+
+/* ========================================
+   PERUFARMA - LOGIN
+   Estilo moderno inspirado en iOS
+======================================== */
+
+.pf-login-page {
+  --pf-red: #ef1729;
+  --pf-turquoise: #00a5b5;
+  --pf-blue: #006c85;
+  --pf-dark: #12243a;
+
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 30px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family:
+    -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Arial, sans-serif;
+
+  background:
+    radial-gradient(
+      circle at 10% 20%,
+      rgba(0, 165, 181, 0.16),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at 90% 85%,
+      rgba(239, 23, 41, 0.10),
+      transparent 38%
+    ),
+    #f6f8fc;
+}
+
+/* Tarjeta principal */
+
+.pf-login-card {
+  width: 100%;
+  max-width: 1060px;
+  min-height: 590px;
+
+  display: grid;
+  grid-template-columns: 45% 55%;
+
+  background: rgba(255, 255, 255, 0.90);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 32px;
+  overflow: hidden;
+
+  box-shadow:
+    0 30px 80px rgba(18, 36, 58, 0.09),
+    0 4px 20px rgba(18, 36, 58, 0.04);
+
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+/* ========================================
+   PANEL DEL LOGO
+======================================== */
+
+.pf-login-brand {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  overflow: hidden;
+
+  background: linear-gradient(
+    145deg,
+    #e2f8fb 0%,
+    #f8fcff 50%,
+    #ffedf0 100%
+  );
+}
+
+.pf-login-brand::before {
+  content: "";
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+
+  background: rgba(0, 165, 181, 0.13);
+  filter: blur(45px);
+
+  top: -80px;
+  left: -80px;
+}
+
+.pf-login-brand::after {
+  content: "";
+  position: absolute;
+  width: 230px;
+  height: 230px;
+  border-radius: 50%;
+
+  background: rgba(239, 23, 41, 0.10);
+  filter: blur(50px);
+
+  right: -90px;
+  bottom: -70px;
+}
+
+.pf-login-logo {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  max-width: 330px;
+  max-height: 350px;
+  height: auto;
+  object-fit: contain;
+
+  filter: drop-shadow(
+    0 12px 18px rgba(18, 36, 58, 0.08)
+  );
+}
+
+/* ========================================
+   FORMULARIO
+======================================== */
+
+.pf-login-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 60px;
+}
+
+.pf-login-inner {
+  width: 100%;
+  max-width: 375px;
+}
+
+.pf-login-inner h1 {
+  color: var(--pf-dark);
+  font-size: 36px;
+  font-weight: 750;
+  letter-spacing: -1.3px;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.pf-login-subtitle {
+  color: #78869a;
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 38px;
+}
+
+/* Campos de entrada */
+
+.pf-field {
+  margin-bottom: 24px;
+}
+
+.pf-field label {
+  display: block;
+  margin-bottom: 10px;
+
+  color: #334155;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.pf-field input {
+  width: 100%;
+  height: 56px;
+  padding: 0 18px;
+
+  background: #f4f6f9;
+  border: 1px solid #e4e9f0;
+  border-radius: 16px;
+
+  color: var(--pf-dark);
+  font-size: 15px;
+
+  outline: none;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.pf-field input::placeholder {
+  color: #98a4b3;
+}
+
+.pf-field input:focus {
+  background: #ffffff;
+  border-color: var(--pf-turquoise);
+  box-shadow:
+    0 0 0 4px rgba(0, 165, 181, 0.11);
+}
+
+/* Campo de clave */
+
+.pf-password-field {
+  position: relative;
+}
+
+.pf-password-field input {
+  padding-right: 93px;
+}
+
+.pf-show-password {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+
+  background: transparent;
+  color: var(--pf-blue);
+
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pf-show-password:hover {
+  background: #e7f7f9;
+}
+
+/* Botón principal */
+
+.pf-login-button {
+  width: 100%;
+  height: 56px;
+  margin-top: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+
+  background: linear-gradient(
+    115deg,
+    #00a5b5,
+    #007d99
+  );
+
+  color: white;
+  border: none;
+  border-radius: 16px;
+
+  font-size: 16px;
+  font-weight: 650;
+  cursor: pointer;
+
+  box-shadow:
+    0 10px 24px rgba(0, 165, 181, 0.19);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.pf-login-button:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 14px 28px rgba(0, 165, 181, 0.27);
+}
+
+.pf-login-button:active {
+  transform: scale(0.985);
+}
+
+.pf-login-button:focus-visible,
+.pf-show-password:focus-visible {
+  outline: 3px solid var(--pf-red);
+  outline-offset: 3px;
+}
+
+/* Aviso del formulario */
+
+.pf-login-notice {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: 12px;
+
+  background: #e7f8fa;
+  color: #006c85;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Pie del formulario */
+
+.pf-login-footer {
+  margin-top: 42px;
+  text-align: center;
+
+  color: #9aa6b5;
+  font-size: 12px;
+}
+
+/* ========================================
+   TABLETS
+======================================== */
+
+@media (max-width: 900px) {
+  .pf-login-card {
+    grid-template-columns: 42% 58%;
+  }
+
+  .pf-login-content {
+    padding: 42px 35px;
+  }
+
+  .pf-login-brand {
+    padding: 25px;
+  }
+
+  .pf-login-inner h1 {
+    font-size: 32px;
+  }
+}
+
+/* ========================================
+   CELULARES
+======================================== */
+
+@media (max-width: 700px) {
+  .pf-login-page {
+    padding: 16px;
+    align-items: center;
+  }
+
+  .pf-login-card {
+    max-width: 450px;
+    min-height: auto;
+    grid-template-columns: 1fr;
+    border-radius: 26px;
+  }
+
+  .pf-login-brand {
+    min-height: 210px;
+    padding: 20px;
+  }
+
+  .pf-login-logo {
+    width: 190px;
+    max-height: 180px;
+  }
+
+  .pf-login-content {
+    padding: 32px 28px 35px;
+  }
+
+  .pf-login-inner h1 {
+    font-size: 29px;
+    letter-spacing: -0.8px;
+  }
+
+  .pf-login-subtitle {
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+
+  .pf-login-footer {
+    margin-top: 32px;
+  }
+}
+
+/* Pantallas pequeñas */
+
+@media (max-width: 380px) {
+  .pf-login-page {
+    padding: 10px;
+  }
+
+  .pf-login-brand {
+    min-height: 160px;
+  }
+
+  .pf-login-logo {
+    width: 150px;
+    max-height: 145px;
+  }
+
+  .pf-login-content {
+    padding: 26px 20px;
+  }
+
+  .pf-login-inner h1 {
+    font-size: 26px;
+  }
+}
+
+/* Accesibilidad */
+
+@media (prefers-reduced-motion: reduce) {
+  .pf-login-page *,
+  .pf-login-page *::before,
+  .pf-login-page *::after {
+    transition: none !important;
+  }
+}

@@ -1,0 +1,734 @@
+
+<div class="pf-app">
+
+  <!-- ENCABEZADO -->
+  <header class="pf-header">
+    <div class="pf-brand">
+      <img
+        src="/Logo-PeruFarma.png"
+        alt="PeruFarma"
+      />
+
+      <div class="pf-brand-description">
+        <strong>Administración</strong>
+        <small>Gestión de inventario</small>
+      </div>
+    </div>
+
+    <a
+      href="http://localhost:5173/dashboard-demo"
+      class="pf-back-link"
+    >
+      ← Volver al Dashboard
+    </a>
+  </header>
+
+  <main class="pf-content">
+
+    <!-- TÍTULO PRINCIPAL -->
+    <section class="pf-hero">
+      <div>
+        <span class="pf-eyebrow">
+          PERUFARMA / ADMINISTRACIÓN
+        </span>
+
+        <h1>Inventario de medicamentos</h1>
+
+        <p>Control de productos, lotes y existencias.</p>
+      </div>
+
+      <button
+        class="pf-btn-primary"
+        (click)="abrirNuevo()"
+      >
+        + Nuevo medicamento
+      </button>
+    </section>
+
+    <!-- ESTADÍSTICAS -->
+    <section class="pf-stats">
+
+      <article class="pf-stat-card">
+        <div class="pf-stat-icon turquoise">▦</div>
+        <span>Productos registrados</span>
+        <strong>{{ totalProductos }}</strong>
+        <small>Medicamentos diferentes</small>
+      </article>
+
+      <article class="pf-stat-card">
+        <div class="pf-stat-icon blue">▤</div>
+        <span>Unidades disponibles</span>
+        <strong>{{ totalUnidades }}</strong>
+        <small>Stock no vencido</small>
+      </article>
+
+      <article class="pf-stat-card">
+        <div class="pf-stat-icon orange">!</div>
+        <span>Stock bajo</span>
+        <strong>{{ totalStockBajo }}</strong>
+        <small>Requieren reposición</small>
+      </article>
+
+      <article class="pf-stat-card">
+        <div class="pf-stat-icon red">◷</div>
+        <span>Próximos a vencer</span>
+        <strong>{{ totalProximos }}</strong>
+        <small>Dentro de los siguientes 90 días</small>
+      </article>
+
+      <article class="pf-stat-card">
+        <div class="pf-stat-icon red">✕</div>
+        <span>Productos vencidos</span>
+        <strong>{{ totalVencidos }}</strong>
+        <small>Con lotes vencidos</small>
+      </article>
+
+    </section>
+
+    <!-- NOTIFICACIONES -->
+    <div
+      class="pf-success"
+      *ngIf="mensaje"
+      role="status"
+    >
+      ✓ {{ mensaje }}
+
+      <button
+        type="button"
+        (click)="mensaje = ''"
+        aria-label="Cerrar aviso"
+      >
+        ×
+      </button>
+    </div>
+
+    <div
+      class="pf-error"
+      *ngIf="error && !modalProducto && !modalLote"
+      role="alert"
+    >
+      {{ error }}
+    </div>
+
+    <!-- LISTA DE MEDICAMENTOS -->
+    <section class="pf-panel">
+
+      <div class="pf-panel-heading">
+        <div>
+          <h2>Lista de medicamentos</h2>
+          <p>
+            Administra tus productos y revisa sus lotes.
+          </p>
+        </div>
+
+        <span class="pf-count">
+          {{ productosFiltrados.length }} resultados
+        </span>
+      </div>
+
+      <!-- BUSCADOR -->
+      <div class="pf-toolbar">
+
+        <div class="pf-search">
+          <span>⌕</span>
+
+          <input
+            type="search"
+            name="busqueda"
+            placeholder="Buscar medicamento, código o marca..."
+            [(ngModel)]="busqueda"
+            aria-label="Buscar medicamentos"
+          />
+        </div>
+
+        <select
+          name="filtro"
+          [(ngModel)]="filtro"
+          aria-label="Filtrar medicamentos"
+        >
+          <option value="todos">Todos los productos</option>
+          <option value="bajo">Stock bajo</option>
+          <option value="vencer">Próximos a vencer</option>
+          <option value="vencidos">Vencidos</option>
+        </select>
+
+      </div>
+
+      <!-- TABLA -->
+      <div class="pf-table-scroll">
+
+        <table class="pf-table">
+
+          <thead>
+            <tr>
+              <th>Medicamento</th>
+              <th>Marca</th>
+              <th>Costo</th>
+              <th>Precio de venta</th>
+              <th>Stock</th>
+              <th>Vencimiento</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <ng-container *ngFor="let p of productosFiltrados">
+
+              <tr>
+                <td>
+                  <div class="pf-product-cell">
+
+                    <span class="pf-product-icon">✚</span>
+
+                    <div>
+                      <strong>{{ p.nombre }}</strong>
+                      <small>
+                        {{ p.codigo }} · {{ p.categoria }}
+                      </small>
+                      <small>{{ p.presentacion }}</small>
+                    </div>
+
+                  </div>
+                </td>
+
+                <td>{{ p.marca }}</td>
+
+                <td>
+                  <div class="pf-price-cell">
+                    <strong>
+                      S/ {{ p.costoCaja.toFixed(2) }}
+                    </strong>
+
+                    <small>
+                      Unidad: S/ {{ costoUnidad(p).toFixed(2) }}
+                    </small>
+                  </div>
+                </td>
+
+                <td>
+                  <div class="pf-price-cell">
+                    <strong>
+                      Caja: S/ {{ p.precioCaja.toFixed(2) }}
+                    </strong>
+
+                    <small>
+                      Unidad: S/ {{ p.precioUnidad.toFixed(2) }}
+                    </small>
+                  </div>
+                </td>
+
+                <td>
+                  <div class="pf-stock-cell">
+                    <strong>
+                      {{ stockVigente(p) }} unidades
+                    </strong>
+
+                    <small>
+                      {{ p.unidadesPorCaja }} unidades/caja
+                    </small>
+
+                    <small>
+                      Mínimo: {{ p.stockMinimo }}
+                    </small>
+                  </div>
+                </td>
+
+                <td>{{ proximoVencimiento(p) }}</td>
+
+                <td>
+                  <span
+                    class="pf-status"
+                    [class.pf-status-red]="
+                      estadoProducto(p) === 'Agotado' ||
+                      estadoProducto(p) === 'Lote vencido'
+                    "
+                    [class.pf-status-yellow]="
+                      estadoProducto(p) === 'Stock bajo' ||
+                      estadoProducto(p) === 'Próximo a vencer'
+                    "
+                    [class.pf-status-green]="
+                      estadoProducto(p) === 'Disponible'
+                    "
+                  >
+                    {{ estadoProducto(p) }}
+                  </span>
+                </td>
+
+                <td>
+                  <div class="pf-actions">
+
+                    <button
+                      class="pf-action-btn"
+                      (click)="alternarLotes(p)"
+                    >
+                      Lotes
+                    </button>
+
+                    <button
+                      class="pf-action-btn"
+                      (click)="editarProducto(p)"
+                    >
+                      Editar
+                    </button>
+
+                    <button
+                      class="pf-action-btn delete"
+                      (click)="eliminarProducto(p)"
+                    >
+                      Eliminar
+                    </button>
+
+                  </div>
+                </td>
+              </tr>
+
+              <!-- LOTES DEL MEDICAMENTO -->
+              <tr *ngIf="lotesExpandidos === p.id">
+
+                <td colspan="8" class="pf-lotes-cell">
+
+                  <div class="pf-lotes-panel">
+
+                    <div class="pf-lotes-heading">
+                      <div>
+                        <h3>Lotes de {{ p.nombre }}</h3>
+                        <small>
+                          Stock físico:
+                          {{ stockFisico(p) }} unidades
+                        </small>
+                      </div>
+
+                      <button
+                        class="pf-btn-secondary"
+                        (click)="abrirNuevoLote(p)"
+                      >
+                        + Agregar lote
+                      </button>
+                    </div>
+
+                    <div
+                      class="pf-lote-item"
+                      *ngFor="let lote of p.lotes"
+                    >
+
+                      <div>
+                        <strong>
+                          Lote {{ lote.codigo }}
+                        </strong>
+
+                        <small>
+                          Vence: {{ lote.vencimiento }}
+                        </small>
+                      </div>
+
+                      <strong>
+                        {{ lote.unidades }} unidades
+                      </strong>
+
+                      <span
+                        class="pf-status"
+                        [class.pf-status-red]="
+                          estadoLote(lote) === 'Vencido'
+                        "
+                        [class.pf-status-yellow]="
+                          estadoLote(lote) === 'Vence en 30 días' ||
+                          estadoLote(lote) === 'Próximo a vencer'
+                        "
+                        [class.pf-status-green]="
+                          estadoLote(lote) === 'Vigente'
+                        "
+                      >
+                        {{ estadoLote(lote) }}
+                      </span>
+
+                    </div>
+
+                  </div>
+                </td>
+              </tr>
+
+            </ng-container>
+
+          </tbody>
+        </table>
+
+      </div>
+
+      <!-- TABLA VACÍA -->
+      <div
+        class="pf-empty"
+        *ngIf="productosFiltrados.length === 0"
+      >
+        <div>▦</div>
+
+        <h3>No se encontraron medicamentos</h3>
+
+        <p>
+          Registra tu primer medicamento o modifica los filtros.
+        </p>
+
+        <button
+          class="pf-btn-primary"
+          (click)="abrirNuevo()"
+        >
+          + Agregar medicamento
+        </button>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- VENTANA PARA AGREGAR Y EDITAR PRODUCTOS -->
+  <div
+    class="pf-modal-overlay"
+    *ngIf="modalProducto"
+  >
+
+    <section
+      class="pf-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="tituloProducto"
+    >
+
+      <div class="pf-modal-header">
+        <div>
+          <h2 id="tituloProducto">
+            {{ editandoId === null
+              ? 'Registrar medicamento'
+              : 'Editar medicamento' }}
+          </h2>
+
+          <p>Completa los datos del producto.</p>
+        </div>
+
+        <button
+          class="pf-close"
+          type="button"
+          (click)="modalProducto = false"
+          aria-label="Cerrar formulario"
+        >
+          ×
+        </button>
+      </div>
+
+      <form (ngSubmit)="guardarProducto()">
+
+        <div class="pf-modal-body">
+
+          <h3>Información del medicamento</h3>
+
+          <div class="pf-form-grid">
+
+            <label>
+              Código del producto *
+              <input
+                name="codigo"
+                [(ngModel)]="form.codigo"
+                placeholder="MED001"
+                required
+              />
+            </label>
+
+            <label>
+              Nombre del medicamento *
+              <input
+                name="nombre"
+                [(ngModel)]="form.nombre"
+                placeholder="Paracetamol 500 mg"
+                required
+              />
+            </label>
+
+            <label>
+              Marca *
+              <input
+                name="marca"
+                [(ngModel)]="form.marca"
+                placeholder="Marca del producto"
+                required
+              />
+            </label>
+
+            <label>
+              Categoría *
+              <input
+                name="categoria"
+                [(ngModel)]="form.categoria"
+                placeholder="Analgésicos"
+                required
+              />
+            </label>
+
+            <label class="pf-full">
+              Presentación *
+              <input
+                name="presentacion"
+                [(ngModel)]="form.presentacion"
+                placeholder="Caja x 20 tabletas"
+                required
+              />
+            </label>
+
+            <label>
+              Unidades por caja *
+              <input
+                type="number"
+                min="1"
+                step="1"
+                name="unidadesPorCaja"
+                [(ngModel)]="form.unidadesPorCaja"
+                required
+              />
+            </label>
+
+            <label>
+              Stock mínimo (unidades) *
+              <input
+                type="number"
+                min="0"
+                step="1"
+                name="stockMinimo"
+                [(ngModel)]="form.stockMinimo"
+                required
+              />
+            </label>
+
+          </div>
+
+          <h3>Costos y precios</h3>
+
+          <div class="pf-form-grid">
+
+            <label>
+              Costo de compra por caja (S/) *
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                name="costoCaja"
+                [(ngModel)]="form.costoCaja"
+                required
+              />
+            </label>
+
+            <label>
+              Precio de venta por caja (S/) *
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                name="precioCaja"
+                [(ngModel)]="form.precioCaja"
+                required
+              />
+            </label>
+
+            <label>
+              Precio de venta por unidad (S/) *
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                name="precioUnidad"
+                [(ngModel)]="form.precioUnidad"
+                required
+              />
+            </label>
+
+          </div>
+
+          <!-- PRIMER LOTE -->
+          <ng-container *ngIf="editandoId === null">
+
+            <h3>Primer lote y existencias</h3>
+
+            <div class="pf-form-grid">
+
+              <label>
+                Número de lote *
+                <input
+                  name="lote"
+                  [(ngModel)]="form.lote"
+                  placeholder="LOT001"
+                  required
+                />
+              </label>
+
+              <label>
+                Fecha de vencimiento *
+                <input
+                  type="date"
+                  name="vencimiento"
+                  [(ngModel)]="form.vencimiento"
+                  required
+                />
+              </label>
+
+              <label>
+                Cantidad de cajas
+                <input
+                  type="number"
+                  min="0"
+                  step="1"
+                  name="cajas"
+                  [(ngModel)]="form.cajas"
+                />
+              </label>
+
+              <label>
+                Unidades sueltas
+                <input
+                  type="number"
+                  min="0"
+                  step="1"
+                  name="unidadesSueltas"
+                  [(ngModel)]="form.unidadesSueltas"
+                />
+              </label>
+
+            </div>
+
+          </ng-container>
+
+          <div class="pf-error" *ngIf="error" role="alert">
+            {{ error }}
+          </div>
+
+        </div>
+
+        <div class="pf-modal-footer">
+
+          <button
+            type="button"
+            class="pf-btn-cancel"
+            (click)="modalProducto = false"
+          >
+            Cancelar
+          </button>
+
+          <button
+            type="submit"
+            class="pf-btn-primary"
+          >
+            Guardar medicamento
+          </button>
+
+        </div>
+
+      </form>
+    </section>
+  </div>
+
+  <!-- VENTANA PARA AGREGAR LOTES -->
+  <div
+    class="pf-modal-overlay"
+    *ngIf="modalLote"
+  >
+
+    <section
+      class="pf-modal pf-modal-small"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="tituloLote"
+    >
+
+      <div class="pf-modal-header">
+        <div>
+          <h2 id="tituloLote">Registrar nuevo lote</h2>
+          <p>Agrega existencias del medicamento.</p>
+        </div>
+
+        <button
+          class="pf-close"
+          type="button"
+          (click)="modalLote = false"
+          aria-label="Cerrar formulario de lote"
+        >
+          ×
+        </button>
+      </div>
+
+      <form (ngSubmit)="guardarLote()">
+
+        <div class="pf-modal-body">
+
+          <div class="pf-form-grid">
+
+            <label>
+              Código del lote *
+              <input
+                name="loteCodigo"
+                [(ngModel)]="loteForm.codigo"
+                placeholder="LOT002"
+                required
+              />
+            </label>
+
+            <label>
+              Fecha de vencimiento *
+              <input
+                type="date"
+                name="loteVencimiento"
+                [(ngModel)]="loteForm.vencimiento"
+                required
+              />
+            </label>
+
+            <label>
+              Cajas recibidas
+              <input
+                type="number"
+                min="0"
+                step="1"
+                name="loteCajas"
+                [(ngModel)]="loteForm.cajas"
+              />
+            </label>
+
+            <label>
+              Unidades sueltas
+              <input
+                type="number"
+                min="0"
+                step="1"
+                name="loteSueltas"
+                [(ngModel)]="loteForm.unidadesSueltas"
+              />
+            </label>
+
+          </div>
+
+          <div class="pf-error" *ngIf="error" role="alert">
+            {{ error }}
+          </div>
+
+        </div>
+
+        <div class="pf-modal-footer">
+
+          <button
+            type="button"
+            class="pf-btn-cancel"
+            (click)="modalLote = false"
+          >
+            Cancelar
+          </button>
+
+          <button
+            type="submit"
+            class="pf-btn-primary"
+          >
+            Guardar lote
+          </button>
+
+        </div>
+
+      </form>
+    </section>
+  </div>
+
+</div>

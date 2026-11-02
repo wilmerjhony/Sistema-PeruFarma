@@ -1,0 +1,1005 @@
+
+/* =====================================
+   PERUFARMA - DASHBOARD
+   Diseño inspirado en Apple / iOS
+===================================== */
+
+.pf-dashboard {
+  --pf-primary: #00a5b5;
+  --pf-deep: #006c85;
+  --pf-red: #ef1729;
+  --pf-text: #14243c;
+  --pf-muted: #8290a4;
+
+  display: grid;
+  grid-template-columns: 255px minmax(0, 1fr);
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #f5f7fb;
+  color: var(--pf-text);
+  font-family: -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Arial, sans-serif;
+}
+
+.pf-dashboard * {
+  box-sizing: border-box;
+}
+
+.pf-dashboard button,
+.pf-dashboard a {
+  font: inherit;
+}
+
+/* =====================================
+   MENÚ LATERAL
+===================================== */
+
+.pf-dash-sidebar {
+  background: #ffffff;
+  border-right: 1px solid #e9eef4;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+  z-index: 40;
+}
+
+.pf-dash-brand {
+  text-align: center;
+  padding: 2px 15px 30px;
+  border-bottom: 1px solid #eef1f5;
+}
+
+.pf-dash-brand img {
+  display: block;
+  width: 155px;
+  height: 130px;
+  object-fit: contain;
+  margin: auto;
+}
+
+.pf-dash-brand p {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #91a0b1;
+}
+
+.pf-dash-nav-title {
+  margin: 31px 15px 15px;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 1.4px;
+  color: #9ba8b8;
+}
+
+.pf-dash-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.pf-dash-nav-item {
+  width: 100%;
+  min-height: 49px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 15px;
+  background: transparent;
+  color: #65758c;
+  border: none;
+  border-radius: 13px;
+  cursor: pointer;
+  text-align: left;
+  font-weight: 550;
+  font-size: 14px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.pf-dash-nav-item:hover {
+  background: #f0f8fa;
+  color: #007e92;
+}
+
+.pf-dash-nav-item.activo {
+  background: #e7f8fa;
+  color: #008da2;
+  font-weight: 700;
+}
+
+.pf-dash-chevron {
+  margin-left: auto;
+}
+
+.pf-dash-sidebar-bottom {
+  margin-top: auto;
+  padding-top: 30px;
+}
+
+.pf-dash-help {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 17px 13px;
+  background: linear-gradient(135deg, #e4f8fb, #f2fcfd);
+  border-radius: 15px;
+  color: #008c9e;
+}
+
+.pf-dash-help > div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.pf-dash-help strong {
+  font-size: 13px;
+}
+
+.pf-dash-help span {
+  font-size: 11px;
+  color: #708d99;
+}
+
+.pf-dash-logout {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  padding: 13px 14px;
+  border-radius: 12px;
+  color: #e13245;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pf-dash-logout:hover {
+  background: #fff0f1;
+}
+
+.pf-dash-copyright {
+  text-align: center;
+  color: #acb5c0;
+  font-size: 11px;
+  margin-top: 13px;
+}
+
+/* =====================================
+   CONTENIDO PRINCIPAL
+===================================== */
+
+.pf-dash-main {
+  min-width: 0;
+}
+
+.pf-dash-topbar {
+  height: 82px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0 42px;
+  background: rgba(255, 255, 255, 0.93);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid #e9eef4;
+}
+
+.pf-dash-top-left,
+.pf-dash-top-right {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.pf-dash-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+  color: #94a0b1;
+}
+
+.pf-dash-breadcrumb strong {
+  color: #24334b;
+  font-weight: 700;
+}
+
+.pf-dash-demo-chip {
+  padding: 8px 13px;
+  border-radius: 30px;
+  background: #edf8fa;
+  color: #008799;
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.pf-dash-user {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding-left: 20px;
+  border-left: 1px solid #e8edf3;
+}
+
+.pf-dash-avatar {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #00b4c5, #007b93);
+  color: white;
+  border-radius: 14px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.pf-dash-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pf-dash-user-info strong {
+  font-size: 13px;
+}
+
+.pf-dash-user-info span {
+  font-size: 11px;
+  color: #94a0b1;
+}
+
+.pf-dash-menu-button {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 12px;
+  background: #edf8fa;
+  color: #008ca0;
+  cursor: pointer;
+}
+
+/* =====================================
+   BIENVENIDA
+===================================== */
+
+.pf-dash-content {
+  max-width: 1600px;
+  padding: 40px 42px 55px;
+  margin: 0 auto;
+}
+
+.pf-dash-welcome {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+  margin-bottom: 43px;
+}
+
+.pf-dash-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 14px;
+  color: #008d9e;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 1.3px;
+}
+
+.pf-dash-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00afbc;
+}
+
+.pf-dash-welcome h1 {
+  font-size: clamp(28px, 3vw, 39px);
+  font-weight: 750;
+  letter-spacing: -1.3px;
+  line-height: 1.2;
+  margin-bottom: 11px;
+}
+
+.pf-dash-welcome h1 span {
+  color: var(--pf-primary);
+}
+
+.pf-dash-welcome p {
+  color: #8995a7;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.pf-dash-date {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 17px;
+  background: #ffffff;
+  border: 1px solid #e8edf3;
+  border-radius: 13px;
+  color: #6d7e94;
+  font-size: 12px;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+/* =====================================
+   TÍTULOS DE SECCIONES
+===================================== */
+
+.pf-dash-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.pf-dash-section-heading h2,
+.pf-dash-panel-header h2 {
+  font-size: 19px;
+  font-weight: 750;
+  letter-spacing: -0.5px;
+  margin-bottom: 7px;
+}
+
+.pf-dash-section-heading p,
+.pf-dash-panel-header p {
+  font-size: 12px;
+  color: #93a0b1;
+  line-height: 1.5;
+}
+
+/* =====================================
+   TARJETAS DE ESTADÍSTICAS
+===================================== */
+
+.pf-dash-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.pf-dash-stat-card {
+  background: #ffffff;
+  border: 1px solid #e9eef4;
+  border-radius: 21px;
+  padding: 23px;
+  min-width: 0;
+  box-shadow: 0 5px 20px rgba(22, 42, 65, 0.025);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.pf-dash-stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 13px 32px rgba(22, 42, 65, 0.07);
+}
+
+.pf-dash-stat-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.pf-dash-stat-icon,
+.pf-dash-mini-icon,
+.pf-dash-quick-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pf-dash-stat-icon {
+  width: 51px;
+  height: 51px;
+  border-radius: 15px;
+}
+
+.pf-dash-stat-icon.turquesa,
+.pf-dash-mini-icon.turquesa,
+.pf-dash-quick-icon.turquesa {
+  color: #0099a9;
+  background: #e0f8f9;
+}
+
+.pf-dash-stat-icon.azul,
+.pf-dash-mini-icon.azul,
+.pf-dash-quick-icon.azul {
+  color: #3975e7;
+  background: #e9f0ff;
+}
+
+.pf-dash-stat-icon.rojo,
+.pf-dash-mini-icon.rojo,
+.pf-dash-quick-icon.rojo {
+  color: #ef1729;
+  background: #fff0f1;
+}
+
+.pf-dash-stat-icon.morado {
+  color: #9155e9;
+  background: #f4ebff;
+}
+
+.pf-dash-stat-arrow {
+  color: #b1bdc9;
+}
+
+.pf-dash-stat-title {
+  font-size: 12px;
+  color: #7f8da1;
+  font-weight: 550;
+  margin-bottom: 10px;
+}
+
+.pf-dash-stat-card h3 {
+  font-size: 29px;
+  font-weight: 750;
+  letter-spacing: -0.7px;
+  margin-bottom: 9px;
+}
+
+.pf-dash-stat-detail {
+  font-size: 11px;
+  color: #a0aab8;
+}
+
+/* =====================================
+   PANELES DE INFORMACIÓN
+===================================== */
+
+.pf-dash-panels {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 24px;
+  margin-bottom: 37px;
+}
+
+.pf-dash-panel {
+  min-width: 0;
+  background: #ffffff;
+  border: 1px solid #e9eef4;
+  border-radius: 22px;
+  padding: 25px;
+  box-shadow: 0 5px 20px rgba(22, 42, 65, 0.025);
+}
+
+.pf-dash-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 25px;
+}
+
+.pf-dash-panel-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 39px;
+  height: 39px;
+  background: #f2f8fa;
+  color: #008e9e;
+  border-radius: 12px;
+}
+
+.pf-dash-empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 30px 12px;
+  min-height: 260px;
+}
+
+.pf-dash-empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 22px;
+  margin-bottom: 21px;
+  background: #eff8fa;
+  color: #00a5b5;
+}
+
+.pf-dash-empty h3 {
+  font-size: 16px;
+  margin-bottom: 9px;
+}
+
+.pf-dash-empty p {
+  color: #93a0b1;
+  font-size: 12px;
+  max-width: 290px;
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+.pf-dash-empty button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: none;
+  background: transparent;
+  color: #008c9c;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* =====================================
+   LISTA DE INVENTARIO
+===================================== */
+
+.pf-dash-inventory-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.pf-dash-inventory-row {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 17px 0;
+  border-bottom: 1px solid #edf1f5;
+}
+
+.pf-dash-mini-icon {
+  width: 43px;
+  height: 43px;
+  border-radius: 13px;
+}
+
+.pf-dash-inventory-row > div:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+  min-width: 0;
+}
+
+.pf-dash-inventory-row strong {
+  font-size: 13px;
+}
+
+.pf-dash-inventory-row span {
+  font-size: 11px;
+  color: #99a5b4;
+}
+
+.pf-dash-inventory-row b {
+  font-size: 17px;
+}
+
+.pf-dash-outline-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 13px 16px;
+  margin-top: 22px;
+  border: 1px solid #c9edf1;
+  border-radius: 12px;
+  background: #f0fbfc;
+  color: #008b9b;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.pf-dash-outline-button:hover {
+  background: #e1f7f9;
+}
+
+/* =====================================
+   ACCESOS RÁPIDOS
+===================================== */
+
+.pf-dash-quick-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.pf-dash-quick-grid button {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 78px;
+  text-align: left;
+  padding: 16px;
+  background: white;
+  border: 1px solid #e9eef4;
+  border-radius: 17px;
+  cursor: pointer;
+  color: var(--pf-text);
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.pf-dash-quick-grid button:hover {
+  transform: translateY(-2px);
+  border-color: #9ddfe7;
+}
+
+.pf-dash-quick-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+}
+
+.pf-dash-quick-grid strong {
+  flex: 1;
+  font-size: 13px;
+}
+
+.pf-dash-quick-grid button > svg {
+  color: #9ba8b8;
+}
+
+.pf-dash-demo-note {
+  margin-top: 30px;
+  text-align: center;
+  color: #a0aab8;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+/* =====================================
+   MÓDULOS EN CONSTRUCCIÓN
+===================================== */
+
+.pf-dash-module {
+  max-width: 700px;
+  min-height: 420px;
+  margin: 35px auto;
+  padding: 55px 35px;
+  background: #ffffff;
+  border: 1px solid #e9eef4;
+  border-radius: 25px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pf-dash-module-icon {
+  width: 92px;
+  height: 92px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e5f8fa;
+  color: #008e9f;
+  border-radius: 25px;
+  margin-bottom: 24px;
+}
+
+.pf-dash-module h1 {
+  font-size: 29px;
+  margin-bottom: 14px;
+}
+
+.pf-dash-module p {
+  font-size: 14px;
+  color: #8a98a9;
+  line-height: 1.8;
+  max-width: 440px;
+}
+
+.pf-dash-module button {
+  margin-top: 28px;
+  padding: 14px 22px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  background: linear-gradient(115deg, #00a5b5, #007a93);
+  border: none;
+  border-radius: 12px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+/* =====================================
+   RESPONSIVE - LAPTOPS
+===================================== */
+
+@media (max-width: 1250px) {
+  .pf-dash-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pf-dash-panels {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =====================================
+   RESPONSIVE - TABLETS
+===================================== */
+
+@media (max-width: 900px) {
+  .pf-dashboard {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pf-dash-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 270px;
+    max-width: 85vw;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    box-shadow: 10px 0 40px rgba(17, 34, 55, 0.08);
+  }
+
+  .pf-dash-sidebar.abierto {
+    transform: translateX(0);
+  }
+
+  .pf-dash-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    background: rgba(15, 30, 47, 0.42);
+    border: none;
+    cursor: pointer;
+  }
+
+  .pf-dash-menu-button {
+    display: flex;
+  }
+
+  .pf-dash-topbar {
+    padding: 0 25px;
+  }
+
+  .pf-dash-content {
+    padding: 30px 25px 45px;
+  }
+}
+
+/* =====================================
+   RESPONSIVE - CELULARES
+===================================== */
+
+@media (max-width: 600px) {
+  .pf-dash-topbar {
+    height: 72px;
+    padding: 0 17px;
+  }
+
+  .pf-dash-breadcrumb > span,
+  .pf-dash-breadcrumb > svg,
+  .pf-dash-demo-chip,
+  .pf-dash-user-info {
+    display: none;
+  }
+
+  .pf-dash-top-left,
+  .pf-dash-top-right {
+    gap: 12px;
+  }
+
+  .pf-dash-user {
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .pf-dash-avatar {
+    width: 39px;
+    height: 39px;
+    border-radius: 12px;
+  }
+
+  .pf-dash-content {
+    padding: 25px 16px 40px;
+  }
+
+  .pf-dash-welcome {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    margin-bottom: 32px;
+  }
+
+  .pf-dash-welcome h1 {
+    font-size: 29px;
+  }
+
+  .pf-dash-date {
+    padding: 11px 14px;
+  }
+
+  .pf-dash-stats {
+    gap: 12px;
+  }
+
+  .pf-dash-stat-card {
+    padding: 17px;
+    border-radius: 17px;
+  }
+
+  .pf-dash-stat-head {
+    margin-bottom: 17px;
+  }
+
+  .pf-dash-stat-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .pf-dash-stat-card h3 {
+    font-size: 25px;
+  }
+
+  .pf-dash-panels {
+    gap: 16px;
+  }
+
+  .pf-dash-panel {
+    padding: 20px;
+  }
+
+  .pf-dash-quick-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .pf-dash-section-heading h2,
+  .pf-dash-panel-header h2 {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 390px) {
+  .pf-dash-stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pf-dashboard *,
+  .pf-dashboard *::before,
+  .pf-dashboard *::after {
+    transition: none !important;
+  }
+}
+
+/* ========================================
+   PERUFARMA - FONDO PREMIUM
+   Estilo Apple / iOS
+======================================== */
+
+/* Fondo moderno con luces suaves */
+.pf-dashboard {
+  background:
+    radial-gradient(
+      ellipse at 85% 10%,
+      rgba(0, 165, 181, 0.16),
+      transparent 42%
+    ),
+    radial-gradient(
+      ellipse at 15% 90%,
+      rgba(239, 23, 41, 0.09),
+      transparent 45%
+    ),
+    linear-gradient(
+      135deg,
+      #f1f8fc 0%,
+      #f8faff 48%,
+      #fff7f8 100%
+    );
+}
+
+/* Bienvenida con estilo cristal */
+.pf-dash-welcome {
+  position: relative;
+  overflow: hidden;
+  padding: 32px 36px;
+  border-radius: 26px;
+
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.94),
+    rgba(228, 249, 251, 0.90) 65%,
+    rgba(255, 237, 240, 0.85)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.9);
+
+  box-shadow:
+    0 12px 40px rgba(27, 59, 87, 0.06);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Decoración circular */
+.pf-dash-welcome::after {
+  content: "";
+  position: absolute;
+  width: 210px;
+  height: 210px;
+  right: -70px;
+  bottom: -125px;
+  border-radius: 50%;
+
+  border: 35px solid rgba(0, 165, 181, 0.07);
+  pointer-events: none;
+}
+
+/* Tarjetas con acabado moderno */
+.pf-dash-stat-card,
+.pf-dash-panel,
+.pf-dash-quick-grid button {
+  background: rgba(255, 255, 255, 0.92);
+
+  border: 1px solid rgba(219, 230, 240, 0.85);
+
+  box-shadow:
+    0 8px 28px rgba(25, 52, 75, 0.045);
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Efecto elegante al pasar el mouse */
+.pf-dash-stat-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 18px 38px rgba(0, 120, 145, 0.10);
+
+  border-color: rgba(0, 165, 181, 0.24);
+}
+
+/* Barra superior translúcida */
+.pf-dash-topbar {
+  background: rgba(255, 255, 255, 0.82);
+
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+
+  border-bottom: 1px solid rgba(220, 231, 240, 0.8);
+}
+
+/* Ajustes para celulares */
+@media (max-width: 600px) {
+  .pf-dash-welcome {
+    padding: 25px 22px;
+    border-radius: 21px;
+  }
+
+  .pf-dash-welcome::after {
+    width: 140px;
+    height: 140px;
+    right: -65px;
+    bottom: -85px;
+  }
+}
